@@ -58,12 +58,15 @@ void setup()
 
 void loop()
 {
-  float temp = htu.readTemperature();
-  float tempf = temp * 1.8 + 32;
-  float rel_hum = htu.readHumidity();
-
   WiFiClient client = server.available();
   if (client) {
+    float temp = htu.readTemperature();
+    float tempf = temp * 1.8 + 32;
+    float rel_hum = htu.readHumidity();
+    //Serial.print("Temp: "); Serial.print(temp); Serial.print(" C");
+    //Serial.print("\t\t");
+    //Serial.print("Humidity: "); Serial.print(rel_hum); Serial.println(" \%");
+    
     Serial.println("New Client."); 
     client.println("{");
     client.print("  \"temperature_c\": ");

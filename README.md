@@ -9,7 +9,7 @@ This module reads temperature of different sensors (default HTU21D) with externa
 ## Installation ##
 ### Module ###
 ```
-	cd ~/MagicMirror/modules
+    cd ~/MagicMirror/modules
     git clone https://github.com/Tom-Hirschberger/MMM-Temperature.git
     cd MMM-Temperature
     npm install
