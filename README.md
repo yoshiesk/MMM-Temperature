@@ -75,6 +75,7 @@ This is a more complex version which uses two sensors with names. The script of 
 | fractionCount | How many decimal places should be displayed after the "." | Integer | 1 |
 | defaultScript | The script which is used to get the values of sensors with no own script option | String | "htu21" |
 | defaultArgs | The arguments of the default script | String | "" |
+| onlyUpdateIfValuesChanged | If this value is set to true the module will only refresh if at least one value of one sensor changed; this is to avoid unneccessary flickering on the page; Boolean | true |
 | sensors | The array containing the configuration of the different sensors | Array | [] |
 
 ### Sensors ###

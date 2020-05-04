@@ -17,7 +17,8 @@ Module.register('MMM-Temperature', {
     sensors: [],
     defaultScript: "htu21",
     defaultArgs: "",
-    fractionCount: 1
+    fractionCount: 1,
+    onlyUpdateIfValuesChanged: true
   },
 
   getStyles: function() {
@@ -146,8 +147,16 @@ Module.register('MMM-Temperature', {
   socketNotificationReceived: function (notification, payload) {
     const self = this
     if(notification === "TEMPERATURE_UPDATE"){
-      self.values = payload.values
-      self.updateDom(self.config.animationSpeed)
+      if(
+        (JSON.stringify(self.values) !== JSON.stringify(payload.values)) ||
+        (!self.config.onlyUpdateIfValuesChanged)
+      ){
+        console.log("Got new temperature values!")
+        self.values = payload.values
+        self.updateDom(self.config.animationSpeed)
+      } else {
+        console.log("Skipping temperature update because no values changed!")
+      }
     }
   },
 })
