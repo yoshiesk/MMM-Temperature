@@ -152,6 +152,8 @@ Module.register('MMM-Temperature', {
         (!self.config.onlyUpdateIfValuesChanged)
       ){
         console.log("Got new temperature values!")
+        console.log(JSON.stringify(self.values))
+        console.log(JSON.stringify(payload.values))
         self.values = payload.values
         self.updateDom(self.config.animationSpeed)
       } else {

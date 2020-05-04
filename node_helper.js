@@ -59,18 +59,34 @@ module.exports = NodeHelper.create({
         if(curValues.error){
           console.log(this.name+": Error while reading data of sensor with id "+curSensorId+"!")
         } else {
-          self.sensorValues[curSensorId] = curValues
-
           if(self.config.useCelsius){
-            curValues["temperature"] = curValues["temperature_c"].toFixed(self.config.fractionCount)
+            if(typeof curValues.temperature_c === "undefined"){
+              if(typeof curValues.temperature_f !== "undefined"){
+                curValues.temperature_c = (curValues.temperature_f - 32.0) / 1.8
+                curValues["temperature"] = curValues["temperature_c"].toFixed(self.config.fractionCount)
+              }
+            } else {
+              curValues["temperature"] = curValues["temperature_c"].toFixed(self.config.fractionCount)
+            }
           } else {
-            curValues["temperature"] = curValues["temperature_f"].toFixed(self.config.fractionCount)
+            if(typeof curValues.temperature_f === "undefined"){
+              if(typeof curValues.temperature_c !== "undefined"){
+                curValues.temperature_f = (curValues.temperature_c * 1.8) + 32
+                curValues["temperature"] = curValues["temperature_f"].toFixed(self.config.fractionCount)
+              }
+            } else {
+              curValues["temperature"] = curValues["temperature_f"].toFixed(self.config.fractionCount)
+            }
           }
+
+          curValues["temperature_f"] = curValues["temperature_f"].toFixed(self.config.fractionCount)
+          curValues["temperature_c"] = curValues["temperature_c"].toFixed(self.config.fractionCount)
 
           if(typeof curValues.humidity !== "undefined"){
             curValues.humidity = curValues.humidity.toFixed(self.config.fractionCount)
           }
 
+          self.sensorValues[curSensorId] = curValues
           console.log(this.name+": New Values of sensor with id "+curSensorId+": "+JSON.stringify(curValues))
         }
       }
